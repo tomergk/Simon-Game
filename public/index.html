@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+  <head>
+
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TOM3R | Simon</title>
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script
+      defer
+      src='app.js'>
+    </script>
+
+    <script
+      defer
+      src="https://code.jquery.com/jquery-3.7.0.min.js"
+      integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g="
+      crossorigin="anonymous">
+    </script>
+
+    <script
+      defer
+      src='./js/game_logic.js'>
+    </script>
+
+  </head>
+
+  <body>
+    <div>
+      <h1 id="level-title">Please Press Any Key To Start The Game</h1>
+    </div>
+
+    <div class="color_board">
+
+      <div class="row">
+        <div type="button" id="orange" class="btn orange"></div>
+        <div type="button" id="red" class="btn red"></div>
+      </div>
+
+      <div class="row">
+        <div type="button" id="purple" class="btn purple"></div>
+        <div type="button" id="blue" class="btn blue"></div>
+      </div>
+
+    </div>
+
+    <div class="scores_board">
+
+      <h2 class="musketeers">The Three Musketeers</h2>
+
+      <table class="scores_table">
+        <tr>
+          <h2><th>Place</th></h2>
+          <h2><th>Name</th></h2>
+          <h2><th>Score</th></h2>
+        </tr>
+        <tr class="itemContainer">
+          <td id="place1"></td>
+          <td id="name1"></td>
+          <td id="score1"></td>
+        </tr>
+        <tr class="itemContainer">
+          <td id="place2"></td>
+          <td id="name2"></td>
+          <td id="score2"></td>
+        </tr>
+        <tr class="itemContainer">
+          <td id="place3"></td>
+          <td id="name3"></td>
+          <td id="score3"></td>
+        </tr>
+      </table>
+    </div>
+
+    <div id="popup-form">
+      <form id="userName_form">
+        <label 
+          class="form_header1" 
+          for>Hey! please enter your name so we place you as one of the tree musketeers.</label>
+        <label class="form_header2" for="name-input">Your name is: </label>
+        <input placeholder="full name" type="text" value="" id="name-input" required>
+        <button class="form_button" type="button">Send</button>
+        <img src='/images/1.png' alt="king-image" class="king_pic">
+      </form>
+    </div>
+
+    <footer class="footer">
+      <small>All rights reserved &copy; TOM3R</small>
+    </footer>
+
+  </body>
+</html>
