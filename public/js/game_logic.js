@@ -129,7 +129,7 @@ async function ifBetterScore() {
   await getUserName(); // Wait for the user to submit the form
   currentUserName = document.getElementById("name-input").value;
   document.getElementById("name-input").value = ""; // Clear the input value to prepare for the next click
-  
+
   let contender = { newName: currentUserName, newScore: level - 1 };
 
   fetch('/', {
@@ -142,7 +142,7 @@ async function ifBetterScore() {
 
   setTimeout(() => {
     retrieve();
-    $("#level-title").text("Please Press Any Key To Start The Game");
+    $("#level-title").text("Please launch the rocket To Start The Game");
     prepareTostartOver();
     hideForm();
   }, 1000);
@@ -164,26 +164,41 @@ function checkAnswer(currentLevel) {
     else {
       playSound("wrong");
       $("#level-title").text("Game over");
+      return_rocket();
       setTimeout(function () {
-        $("#level-title").text("Please Press Any Key To Start The Game");
-      }, 4000);
+        $("#level-title").text("Please launch the rocket To Start The Game");
+      }, 2000);
 
       prepareTostartOver();
     }
   }
 }
 
+function start_rocket() {
+  $(document).ready(function () {
+    $("#start-button").click(function () {
+      // Start the animation when the button is clicked
+      $(this).css("animation", "moveOut 1s forwards");
+    });
+  });
+}
+
+function return_rocket() {
+  $("#start-button").css("animation", "moveBack 1s forwards");
+}
+
 // ========== WORK STARTS HERE ==========
 hideForm();
 retrieve();
-
-// Keypress function to start the game
-$(document).keypress(function () {
-  if (!started && formSubmitted) {
-    $("#level-title").text("Level " + level);
-    nextSequence();
-    started = true;
-  }
+start_rocket();
+$(document).ready(function () {
+  $("#start-button").click(function () {
+    if (!started && formSubmitted) {
+      $("#level-title").text("Level " + level);
+      nextSequence();
+      started = true;
+    }
+  });
 });
 
 // Activate effects when the user click on a color
@@ -196,5 +211,4 @@ $(".btn").click(function () {
     checkAnswer(userClickedPattern.length - 1);
   }
 });
-
 

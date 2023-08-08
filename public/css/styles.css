@@ -24,6 +24,40 @@ html{
   color: #FFD9C0;
 }
 
+#start-button {
+  background-color: transparent;
+  position: absolute;
+  top: 15%;
+  right: 20%;
+  transform: translate(-50%, -50%);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+@keyframes moveOut {
+  0% {
+    transform: translate(-50%, -80%);
+  }
+  100% {
+    transform: translate(150%, -800%) rotate(-60deg);
+  }
+}
+
+@keyframes moveBack {
+  0% {
+    transform: translate(150%, -800%) rotate(60deg);
+  }
+  100% {
+    transform: translate(-50%, -80%);
+  }
+}
+
+#start-button img{
+  height:40px;
+  width:40px;
+}
+
 .color_board {
   display: block;
   width: 33%;
@@ -173,7 +207,7 @@ footer {
   text-align: center;
   margin-top: 17rem;
   color: #FF78C4;
-  font-size: 2rem;
+  font-size: 1.8rem;
 }
 
 /* MEDIA QUERIES (MEDIUM DEVICES (Tablets)) */
@@ -189,9 +223,7 @@ footer {
     width: 3rem;
   }
   footer {
-    margin-top: 4rem;
-    font-size: 1rem;
-    font-weight:bold;
+    font-size: 1.5rem;
   }
   .color_board {
     width: 50%;
@@ -215,9 +247,4 @@ footer {
     width: 150%;
     text-align: left;
   }
-  footer{
-    font-size: 1rem;
-    font-weight:bold;
-  }
-  
 }
