@@ -9,12 +9,10 @@ const app = express();
 app.use(express.static('public'));
 app.use(bodyParser.json());
 
-let pass = process.env.PASSWORD;
-
 // ============= Connect =============
 async function connect() {
   try {
-    await mongoose.connect(`mongodb+srv://admin-tomer:${pass}@cluster0.wg0hdfy.mongodb.net/placesDB`);
+    await mongoose.connect(process.env.MONGODB_URI)
   } catch (error) {
     throw new Error(error);
   }
@@ -113,10 +111,8 @@ app.post("/", async (req, res) => {
     // Retrieving DB documents
     let firstDoc = await Place.findOne({ place: 1 }).exec();
     let secondDoc = await Place.findOne({ place: 2 }).exec();
-    let thirdDoc = await Place.findOne({ place: 3 }).exec();
 
     // Performing a comparison logic + update the right docs
-
     if (newScore > secondDoc.score) {
 
       if (newScore > firstDoc.score) { // updating first place, second place, third place
