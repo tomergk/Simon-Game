@@ -142,7 +142,7 @@ async function ifBetterScore() {
 
   setTimeout(() => {
     retrieve();
-    $("#level-title").text("Please launch the rocket To Start The Game");
+    $("#level-title").text("To start the game, launch the");
     prepareTostartOver();
     hideForm();
   }, 1000);
@@ -166,7 +166,7 @@ function checkAnswer(currentLevel) {
       $("#level-title").text("Game over");
       return_rocket();
       setTimeout(function () {
-        $("#level-title").text("Please launch the rocket To Start The Game");
+        $("#level-title").text("To start the game, launch the");
       }, 2000);
 
       prepareTostartOver();
@@ -178,13 +178,13 @@ function start_rocket() {
   $(document).ready(function () {
     $("#start-button").click(function () {
       // Start the animation when the button is clicked
-      $(this).css("animation", "moveOut 1s forwards");
+      $(this).css("animation", "moveOut 4s ease-in-out forwards"); 
     });
   });
 }
 
 function return_rocket() {
-  $("#start-button").css("animation", "moveBack 1s forwards");
+  $("#start-button").css("animation", "moveBack 3s forwards");
 }
 
 // ========== WORK STARTS HERE ==========
