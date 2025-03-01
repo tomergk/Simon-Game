@@ -56,7 +56,7 @@ function animatePress(currentColor) {
   $("#" + currentColor).addClass("pressed");
   setTimeout(function () {
     $("#" + currentColor).removeClass("pressed");
-  }, 100);
+  }, 150);
 }
 
 // Picks next color + change title text level
@@ -67,8 +67,11 @@ function nextSequence() {
   var randomNumber = Math.floor(Math.random() * 4);
   var randomChosenColor = buttonColors[randomNumber];
   gamePattern.push(randomChosenColor);
-  $("#" + randomChosenColor).fadeIn(100).fadeOut(100).fadeIn(100);
-  playSound(randomChosenColor);
+  $("#" + randomChosenColor).css("background-color", "black"); // Change to red
+  setTimeout(function() {
+    $("#" + randomChosenColor).css("background-color", ""); // Reset to original
+    }, 200);
+    playSound(randomChosenColor);
 }
 
 function prepareTostartOver() {
@@ -76,6 +79,8 @@ function prepareTostartOver() {
   gamePattern = [];
   started = false;
 }
+
+// ####################################### Form
 
 function showForm() {
   document.getElementById('popup-form').classList.remove('form-off');
@@ -92,6 +97,8 @@ function hideForm() {
   document.getElementsByClassName('scores_board')[0].classList.remove('page-blur'); // blur the scores board
   document.getElementsByClassName('color_board')[0].classList.remove('page-blur'); // blur the color board
 }
+
+// #######################################
 
 async function getUserName() {
   return new Promise((resolve) => {
@@ -174,9 +181,11 @@ function checkAnswer(currentLevel) {
   }
 }
 
+// ############################################################
+
 function start_rocket() {
   $(document).ready(function () {
-    $("#start-button").click(function () {
+    $("#rocket").click(function () {
       // Start the animation when the button is clicked
       $(this).css("animation", "moveOut 4s ease-in-out forwards"); 
     });
@@ -184,7 +193,7 @@ function start_rocket() {
 }
 
 function return_rocket() {
-  $("#start-button").css("animation", "moveBack 3s forwards");
+  $("#rocket").css("animation", "moveBack 3s forwards");
 }
 
 // ========== WORK STARTS HERE ==========
@@ -192,7 +201,7 @@ hideForm();
 retrieve();
 start_rocket();
 $(document).ready(function () {
-  $("#start-button").click(function () {
+  $("#rocket").click(function () {
     if (!started && formSubmitted) {
       $("#level-title").text("Level " + level);
       nextSequence();
