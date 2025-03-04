@@ -78,7 +78,17 @@ function prepareTostartOver() {
   level = 0;
   gamePattern = [];
   started = false;
+  
+  // Reset the rocket's image: remove any animation and set it back to the initial transform.
+  $("#rocket img").css({
+    "animation": "none",
+    "transform": "scale(0) rotate(0deg)"
+  });
+  
+  // Call the reset function to handle showing the rocket and activating the button with the pop effect.
+  resetRocketAndActivateButton();
 }
+
 
 // ####################################### Form
 
@@ -183,14 +193,59 @@ function checkAnswer(currentLevel) {
 
 // ############################################################
 
-function start_rocket() {
-  $(document).ready(function () {
-    $("#rocket").click(function () {
-      // Start the animation when the button is clicked
-      $(this).css("animation", "moveOut 4s ease-in-out forwards"); 
+
+// +++++++++++++++++
+
+function activateRocketAndStartGame() {
+  $("#activate-button").click(function () {
+    // Start the rocket's animation on its image
+    $("#rocket img").css("animation", "moveOut 4s ease-in-out forwards");
+
+    // When the animation ends, hide the rocket and the activate button
+    $("#rocket img").one("animationend", function () {
+      $("#rocket").hide();
+      $("#activate-button").hide();
+
+      // Start the game if it hasn't already started
+      if (!started && formSubmitted) {
+        $("#level-title").text("Level " + level);
+        nextSequence();
+        started = true;
+      }
     });
   });
 }
+
+$(document).ready(function () {
+  activateRocketAndStartGame();
+
+  $(".btn").click(function () {
+    if (formSubmitted) {
+      var userChosenColor = $(this).attr("id");
+      userClickedPattern.push(userChosenColor);
+      playSound(userChosenColor);
+      animatePress(userChosenColor);
+      checkAnswer(userClickedPattern.length - 1);
+    }
+  });
+});
+
+function resetRocketAndActivateButton() {
+  // Make sure the rocket container is visible.
+  $("#rocket").show();
+
+  // Wait 2 seconds, then show the activate button with the pop-in effect.
+  setTimeout(function () {
+    $("#activate-button")
+      .show() // Ensure the button is visible
+      .css("animation", "popIn 1s ease forwards"); // Apply the pop-in animation
+  }, 2000);
+}
+
+
+
+
+// +++++++++++++++++
 
 function return_rocket() {
   $("#rocket").css("animation", "moveBack 3s forwards");
@@ -220,4 +275,3 @@ $(".btn").click(function () {
     checkAnswer(userClickedPattern.length - 1);
   }
 });
-
