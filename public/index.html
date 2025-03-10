@@ -31,11 +31,44 @@
   </head>
 
   <body>
+
+    <div class="animated-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+      <div class="shape shape-4"></div>
+      <div class="shape shape-5"></div>
+    </div>    
+
+    <!-- Instructions Modal -->
+    <div id="instructions-modal">
+      <div class="modal-content">
+        <h2>Game Instructions</h2>
+        <p>
+          <b>Welcome to Simon+ game!</b><br>
+          Your goal is to follow the sequence and press the right colors. <br>
+          Keep in mind that each level you will be exposed to another color. <br>
+          When you're ready, click <span style="color: #8E44AD; font-weight: bold;">OK</span> to begin.
+        </p>
+        <button id="read-instructions">
+          <img src="images/audio-icon.png" alt="">
+          <audio id="instructions" src="sounds/instructions.mp3" preload="auto"></audio>
+        </button>
+
+        
+        <button id="instructions-ok">OK</button>
+      </div>
+    </div>
+
     <div>
         <h1 id="level-title">To start the game, launch the</h1>
     </div>
 
     <button id="activate-button"><img src="images/button.png" alt="button-to-active"></button>
+    <audio id="hover-sound" src="sounds/rocket/hover-button.mp3" preload="auto"></audio>
+    <audio id="press-button" src="sounds/rocket/press-button.mp3" preload="auto"></audio>
+    <audio id="exit" src="sounds/rocket/exit.mp3" preload="auto"></audio>
+    <audio id="boom" src="sounds/rocket/boom.mp3" preload="auto"></audio>
 
     <div class="color_board">
 
@@ -85,7 +118,6 @@
         <label 
           class="form_header1" 
           for>Hey! please enter your name so we place you as one of the tree musketeers.</label>
-        <label class="form_header2" for="name-input">Your name is: </label>
         <input placeholder="full name" type="text" value="" id="name-input" required>
         <button class="form_button" type="button">Send</button>
         <img src='/images/1.png' alt="king-image" class="king_pic">
@@ -95,6 +127,15 @@
     <footer class="footer">
       <small>All rights reserved &copy; TOM3R</small>
     </footer>
+      
+
+      <script>document.addEventListener("DOMContentLoaded", function() {
+        const instructionsAudio = document.getElementById("instructions");
+        instructionsAudio.play().catch(error => {
+          console.error("Autoplay prevented:", error);
+        });
+      });</script>
+
 
   </body>
 </html>

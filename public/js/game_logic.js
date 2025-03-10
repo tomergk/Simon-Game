@@ -1,11 +1,40 @@
-const buttonColors = ["red", "blue", "purple", "orange"]; // Options to pick from.
-let gamePattern = []; // Array which saves the colors that were picked randomly, in the right order.
-let userClickedPattern = []; // Array which saves the colors that the user picked.
-let level = 0; // The game starts at level 1 but for the easy logic it starts at 0.
-let started = false; // Flag which turn true after first key clicked in order to start the game.
+const buttonColors = ["red", "blue", "yellow", "green"]; 
+let gamePattern = []; // Array that saves colors that picked randomly, in the right order.
+let userClickedPattern = []; // Array that saves the colors that the user picked.
+let level = 0; // The game starts at level 1 but for easy logic it starts at 0.
+let started = false; // Flag turn true after game activated in order to start the game.
 let currentUserName = "";
 let formSubmitted = true;
-let lowestScoreOnTable; // We always saves the lowest score on scores table
+let lowestScoreOnTable; // Lowest score from scores table
+
+const activateButton = document.getElementById('activate-button');
+const hoverSound = document.getElementById('hover-sound');
+const pressButton = document.getElementById('press-button');
+const exit = document.getElementById('exit');
+const boom = document.getElementById('boom');
+
+// ############################
+// User Instructions: for User's understanding & Audio to work 
+document.addEventListener("DOMContentLoaded", function() {
+  const okButton = document.getElementById("instructions-ok");
+  const instructionsAudio = document.getElementById("instructions");
+  // Read aloud option
+  document.getElementById("read-instructions").addEventListener("click", function() {
+    instructionsAudio.currentTime = 0;
+    instructionsAudio.play();
+  });
+
+  if (okButton) {
+    okButton.addEventListener("click", function() {
+      document.getElementById("instructions-modal").style.display = "none";
+      instructionsAudio.pause();
+    });
+  }
+});
+
+
+// ############################ 
+
 
 // ============= Retrieving data from DB & display it on user's screen's table =============
 function retrieve() {
@@ -67,7 +96,7 @@ function nextSequence() {
   var randomNumber = Math.floor(Math.random() * 4);
   var randomChosenColor = buttonColors[randomNumber];
   gamePattern.push(randomChosenColor);
-  $("#" + randomChosenColor).css("background-color", "black"); // Change to red
+  $("#" + randomChosenColor).css("background-color", "black"); // blackaning
   setTimeout(function() {
     $("#" + randomChosenColor).css("background-color", ""); // Reset to original
     }, 200);
@@ -176,7 +205,7 @@ function checkAnswer(currentLevel) {
   else {
     // checking if current score > third place on table's scores
     if (level - 1 > lowestScoreOnTable) {
-      ifBetterScore(); // User failed => checking if score is better than any table's scores
+    ifBetterScore(); // User failed => checking if score is better than any table's scores
     }
     else {
       playSound("wrong");
@@ -193,21 +222,22 @@ function checkAnswer(currentLevel) {
 
 // ############################################################
 
-
-// +++++++++++++++++
-
 function activateRocketAndStartGame() {
   $("#activate-button").click(function () {
+    console.log("active button is ready to be clicked");
     // Start the rocket's animation on its image
-    $("#rocket img").css("animation", "moveOut 4s ease-in-out forwards");
-
+    $("#rocket img").css("animation", "moveOut 2s ease-in-out forwards");
+    console.log("rockets animation activated");
     // When the animation ends, hide the rocket and the activate button
     $("#rocket img").one("animationend", function () {
       $("#rocket").hide();
+      console.log("hide the rocket");
       $("#activate-button").hide();
+      console.log("hide active button rocket");
 
       // Start the game if it hasn't already started
       if (!started && formSubmitted) {
+        console.log("if didnt start the game then change next level title and choose next sequence and change started var to true");
         $("#level-title").text("Level " + level);
         nextSequence();
         started = true;
@@ -216,34 +246,40 @@ function activateRocketAndStartGame() {
   });
 }
 
-$(document).ready(function () {
-  activateRocketAndStartGame();
+// Activate sound for hovering over the activated
+activateButton.addEventListener('mouseenter', () => {
+  hoverSound.currentTime = 0; // Restart sound if needed
+  hoverSound.play();
+  hoverSound.loop = true;
+});
+activateButton.addEventListener('mouseleave', () => {
+  hoverSound.pause();
+  hoverSound.loop = false;     // reset looping
+});
 
-  $(".btn").click(function () {
-    if (formSubmitted) {
-      var userChosenColor = $(this).attr("id");
-      userClickedPattern.push(userChosenColor);
-      playSound(userChosenColor);
-      animatePress(userChosenColor);
-      checkAnswer(userClickedPattern.length - 1);
-    }
-  });
+// Activate sound for pressing on the activate-button
+activateButton.addEventListener('click', () => {
+  pressButton.currentTime = 0;
+  pressButton.play();
+  setTimeout(() => {
+  exit.currentTime = 0;
+  exit.play();
+}, 300); 
+setTimeout(() => {
+  boom.currentTime = 0;
+  boom.play();
+}, 2000); 
 });
 
 function resetRocketAndActivateButton() {
-  // Make sure the rocket container is visible.
   $("#rocket").show();
-
-  // Wait 2 seconds, then show the activate button with the pop-in effect.
+  // Wait 3 seconds, then show the activate button with the pop-in effect.
   setTimeout(function () {
     $("#activate-button")
       .show() // Ensure the button is visible
       .css("animation", "popIn 1s ease forwards"); // Apply the pop-in animation
-  }, 2000);
+  }, 3000);
 }
-
-
-
 
 // +++++++++++++++++
 
@@ -253,25 +289,32 @@ function return_rocket() {
 
 // ========== WORK STARTS HERE ==========
 hideForm();
+console.log("hiding form");
 retrieve();
-start_rocket();
+console.log("retriving data from db");
 $(document).ready(function () {
   $("#rocket").click(function () {
     if (!started && formSubmitted) {
       $("#level-title").text("Level " + level);
       nextSequence();
       started = true;
+      console.log("rocket is ready to be clicked and if not started, then putting title level & choosing next sequence & start=true");
     }
   });
-});
 
-// Activate effects when the user click on a color
-$(".btn").click(function () {
-  if (formSubmitted) {
-    var userChosenColor = $(this).attr("id");
-    userClickedPattern.push(userChosenColor);
-    playSound(userChosenColor);
-    animatePress(userChosenColor);
-    checkAnswer(userClickedPattern.length - 1);
-  }
+  activateRocketAndStartGame();
+  console.log("activating rocket");
+
+  // Activate effects when the user click on a color
+  $(".btn").click(function () {
+    if (formSubmitted) {
+      var userChosenColor = $(this).attr("id");
+      console.log("userChosenColor:" + userChosenColor);
+      userClickedPattern.push(userChosenColor);
+      playSound(userChosenColor);
+      animatePress(userChosenColor);
+      checkAnswer(userClickedPattern.length - 1);
+    }
+  });
+
 });

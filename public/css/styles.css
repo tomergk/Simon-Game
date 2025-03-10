@@ -14,11 +14,103 @@ html, body {
   display: none;
 }
 
+/* ####################### */
+
 #level-title {
   font-family: 'Press Start 2P', cursive;
   font-size: 1.8rem;
   color: #F5A623;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* #################### */
+/* Instructions popout */
+#instructions-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(3, 28, 33, 0.665); /* semi-transparent dark overlay */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999; /* ensures it sits on top */
+  animation: fadeIn 1s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Modal content styling with a vibrant gradient and pop-in effect */
+.modal-content {
+  background: linear-gradient(5deg, #fafdff, #104fcd); /* cheerful gradient */
+  padding: 2rem;
+  border-radius: 3rem;
+  max-width: 90%;
+  text-align: center;
+  box-shadow:
+  0.5rem 0.5rem 0.5rem 0.1rem #FFCE3C,
+  -0.5rem -0.5rem 0.5rem 0.1rem #4A90E2,
+  0.5rem -0.5rem 0.5rem 0.1rem #44B275,
+  -0.5rem 0.5rem 0.5rem 0.1rem #E94E77;
+  animation: popIn 1s ease;
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Style for the header to add a fun retro vibe */
+.modal-content h2 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 2rem;
+  color: #E67E22;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  margin-bottom: 1rem;
+}
+
+/* Style for the instructions paragraph */
+.modal-content p {
+  font-size: 1.2rem;
+  color: #111;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+/* Style for the OK button */
+.modal-content button {
+  background: #fff;
+  color: #8E44AD;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.modal-content button:hover {
+  color: #00c2b8;
+  border-color: black 1rem;
+}
+
+#read-instructions img{
+  height: 1rem;
+  width: 1.2rem;
 }
 
 /* #################### */
@@ -36,7 +128,7 @@ html, body {
   width: 100%;
   height: 100%;
   transform: scale(0);
-  transition: transform 1s ease; /* the transition below will take 0.3 sec */
+  transition: transform 1s ease; 
 }
 
 @keyframes moveOut {
@@ -75,7 +167,30 @@ html, body {
 #activate-button img{
   width: 100%;
   height: 100%;
+  border-radius: 1rem;
 }
+
+#activate-button img:hover {
+  box-shadow: 0 0 20px 10px rgba(0, 255, 0, 0.8);
+  transition: box-shadow 0.3s ease;
+}
+
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 10px 2px rgba(0, 255, 0, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px 10px rgba(0, 255, 0, 1);
+  }
+  100% {
+    box-shadow: 0 0 10px 2px rgba(0, 255, 0, 0.5);
+  }
+}
+
+#activate-button img:hover {
+  animation: pulseGlow 1s infinite;
+}
+
 
 @keyframes popIn {
   0% {
@@ -119,20 +234,20 @@ html, body {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
 }
 
-.red {
-  background-color: #E94E77;
-}
-
 .yellow {
   background-color: #FFCE3C;
 }
 
-.blue {
-  background-color: #4A90E2;
+.red {
+  background-color: #E94E77;
 }
 
 .green {
   background-color: #44B275;
+}
+
+.blue {
+  background-color: #4A90E2;
 }
 
 .pressed {
@@ -178,71 +293,79 @@ td {
 
 /* ######################### */
 
+/* Popup Form Container */
 #popup-form {
   position: fixed;
-  top: 52%;
+  top: 50%;
   left: 50%;
-  font-size: larger;
-  font-weight: bold;
   transform: translate(-50%, -50%);
-  width: 20%;
-  height: 30%;
-  padding: 20px;
-  color: #EAE0DA;
-  background-color:#0B666A;
-  border-radius: 200px 200px 200px 200px;
-  -moz-border-radius: 200px 200px 200px 200px;
-  -webkit-border-radius: 200px 200px 200px 200px;
-  -webkit-box-shadow: -1px 200px 200px 200px #FCC2FC;
-  -moz-box-shadow: -1px 200px 121px 14px #FCC2FC;
-  box-shadow: -1px 200px 200px 14px #CBB279;
-}
-
-.form_header1{
-  display: block; 
+  width: 400px;  /* Adjust as needed */
+  padding: 2rem;
   text-align: center;
-  margin-top: 3rem;
+  background: linear-gradient(135deg, #FBAB7E, #F7CE68);
+  border-radius: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  font-family: 'Roboto', sans-serif;
+  color: #2D2D2D;
 }
 
-.form_header2{
-  margin-top: 1rem;
-  display: grid; 
-  text-align: left;
-} 
+.form_header1 {
+  margin: 0 0 1rem 0;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.8rem;
+  color: #2D2D2D;
+  text-shadow: 2px 2px #FFF5D7; 
+}
 
-.king_pic{
-  width: 30%;
-  margin-bottom: 5%;
+.king_pic {
+  width: 120px;
+  height: 120px;
+  margin: 1.5rem auto;
+  display: block;
   background-repeat: no-repeat;
-  display: grid;
+  background-size: contain;
 }
 
-.form-off{
+.form-off {
   display: none;
 }
 
+#name-input {
+  width: 80%;
+  margin-top: 1rem;
+  padding: 0.6rem;
+  border-radius: 10px;
+  border: 2px solid #ccc;
+  font-size: 1rem;
+  font-family: 'Roboto', sans-serif;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+#name-input:focus {
+  border-color: #FBAB7E; 
+}
+
 .form_button {
-  background-color: #0d6510; 
-  color: white;
-  border-radius: 50%;
-  border-color: #EFE1D1;
-  border: 2px solid;
-  padding: 5%;
-  transition-duration: 0.4s;
+  margin-top: 1.5rem;
+  background-color: #FF6F61; 
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 700;
   cursor: pointer;
-  margin: 0;
-  font-size: 16px;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19); 
-  opacity: 0.9;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .form_button:hover {
-  background-color: #A2FF86;
-  color: black;
-  border-color: white;
-  box-shadow: none;   
-  opacity: 1;
+  background-color: #FA4A3D; 
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
 }
+
 
 /* ######################### */
 
@@ -252,6 +375,142 @@ footer {
   font-size: 1.4rem;
   background-color: #709be6;
 }
+
+
+/* ################ */
+.animated-shapes {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0; 
+}
+
+.animated-shapes {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; 
+  z-index: 0;
+}
+
+@keyframes grow {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.shape.shape-1 {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(245, 166, 35, 0.5);
+  top: 10%;
+  left: 20%;
+
+  animation: grow 1s ease forwards, moveShape1 30s linear infinite 1s;
+}
+
+@keyframes moveShape1 {
+  0%   { transform: translate(0, 0) scale(1); opacity: 0.6; }
+  25%  { transform: translate(20vw, 10vh) scale(1.1); opacity: 0.8; }
+  50%  { transform: translate(10vw, 20vh) scale(1.2); opacity: 1; }
+  75%  { transform: translate(-10vw, 10vh) scale(1.1); opacity: 0.8; }
+  100% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+}
+
+.shape.shape-2 {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background: rgba(233, 78, 119, 0.5);
+  top: 50%;
+  left: 70%;
+  border-radius: 50%;
+  animation: grow 1s ease forwards, moveShape2 35s linear infinite 1s;
+  animation-delay: 0s, -5s;  
+}
+
+@keyframes moveShape2 {
+  0%   { transform: translate(0, 0) scale(1); opacity: 0.5; }
+  25%  { transform: translate(-20vw, 15vh) scale(1.2); opacity: 0.7; }
+  50%  { transform: translate(10vw, -20vh) scale(1.1); opacity: 1; }
+  75%  { transform: translate(20vw, 10vh) scale(1.3); opacity: 0.8; }
+  100% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+}
+
+.shape.shape-3 {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(74, 144, 226, 0.5);
+  top: 80%;
+  left: 30%;
+  animation: grow 1s ease forwards, moveShape3 28s linear infinite 1s;
+  animation-delay: 0s, -3s;
+}
+
+@keyframes moveShape3 {
+  0%   { transform: translate(0, 0) scale(1); opacity: 0.7; }
+  25%  { transform: translate(15vw, -10vh) scale(1.2); opacity: 0.9; }
+  50%  { transform: translate(-15vw, 20vh) scale(1.3); opacity: 1; }
+  75%  { transform: translate(-10vw, -15vh) scale(1.1); opacity: 0.8; }
+  100% { transform: translate(0, 0) scale(1); opacity: 0.7; }
+}
+
+.shape.shape-4 {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(68, 178, 117, 0.5);
+  top: 20%;
+  left: 80%;
+  animation: grow 1s ease forwards, moveShape4 40s linear infinite 1s;
+  animation-delay: 0s, -2s;
+}
+
+@keyframes moveShape4 {
+  0%   { transform: translate(0, 0) scale(1); opacity: 0.6; }
+  25%  { transform: translate(25vw, 5vh) scale(1.2); opacity: 0.8; }
+  50%  { transform: translate(5vw, 25vh) scale(1.3); opacity: 1; }
+  75%  { transform: translate(-20vw, 15vh) scale(1.1); opacity: 0.7; }
+  100% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+}
+
+.shape.shape-5 {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(142, 68, 173, 0.5);
+  top: 70%;
+  left: 10%;
+  animation: grow 1s ease forwards, moveShape5 32s linear infinite 1s;
+  animation-delay: 0s, -4s;
+}
+
+@keyframes moveShape5 {
+  0%   { transform: translate(0, 0) scale(1); opacity: 0.8; }
+  25%  { transform: translate(-10vw, 20vh) scale(1.2); opacity: 0.9; }
+  50%  { transform: translate(20vw, -15vh) scale(1.1); opacity: 1; }
+  75%  { transform: translate(15vw, 15vh) scale(1.3); opacity: 0.7; }
+  100% { transform: translate(0, 0) scale(1); opacity: 0.8; }
+}
+
+/* ################ */
+
 
 /* MEDIA QUERIES (MEDIUM DEVICES (Tablets)) */
 
