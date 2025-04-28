@@ -13,8 +13,10 @@ const pressButton = document.getElementById('press-button');
 const exit = document.getElementById('exit');
 const boom = document.getElementById('boom');
 
-// ############################
-// User Instructions form
+
+// ###########################################################
+// ################  User Instructions form  #################
+// ###########################################################
 document.addEventListener("DOMContentLoaded", function () {
   const okButton = document.getElementById("instructions-ok");
   const instructionsAudio = document.getElementById("instructions");
@@ -55,10 +57,14 @@ function nextSequence() {
   gamePattern.push(randomChosenColor);
   console.log("Game pattern: " + gamePattern);
 
-  animatePress(randomChosenColor);
-  playSound(randomChosenColor);
+
+  setTimeout(function () {
+    animatePress(randomChosenColor);
+    playSound(randomChosenColor);
+  }, 500);
 }
 
+// Resetting the game
 function prepareTostartOver() {
   level = 0;
   gamePattern = [];
@@ -75,8 +81,9 @@ function prepareTostartOver() {
 }
 
 
-// ####################################### Form
-
+// ###########################################################
+// ################  Winner's Form  ##########################
+// ###########################################################
 function showForm() {
   document.getElementById('popup-form').classList.remove('form-off');
   formSubmitted = false;
@@ -248,7 +255,9 @@ function playSound(name) {
 }
 
 function animatePress(currentColor) {
+
   $("#" + currentColor).addClass("pressed");
+
   setTimeout(function () {
     $("#" + currentColor).removeClass("pressed");
   }, 350);

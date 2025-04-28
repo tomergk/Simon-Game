@@ -40,7 +40,7 @@
       <div class="shape shape-5"></div>
     </div>
 
-    <!-- Instructions Modal -->
+    <!-- Instructions Form -->
     <div id="instructions-modal">
       <div class="modal-content">
         <h2>Game Instructions</h2>
@@ -119,16 +119,24 @@
       </table>
     </div>
 
+    <!-- Winner's Form -->
     <div id="popup-form">
       <form id="userName_form">
+
         <label
-          class="form_header1"
-          for>"Please enter your name to be listed among the top three high scorers."
+          class="form_header1" for="name-input">
+          "Please enter your name to be listed among the top three high scorers"
         </label>
-        <input placeholder="full name" type="text" value id="name-input"
-          required>
-        <button class="form_button" type="button">Send</button>
+
+        <!-- <input placeholder="full name" type="text" value id="name-input" required> -->
+        <input placeholder="Full name" type="text" id="name-input"
+          name="name-input" required>
+
+        <!-- <button class="form_button" type="button">Send</button> -->
+        <button class="form_button" type="submit">Send</button>
+
         <img src='/images/1.png' alt="king-image" class="king_pic">
+
       </form>
     </div>
 

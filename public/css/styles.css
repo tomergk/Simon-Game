@@ -251,8 +251,6 @@ html, body {
 }
 
 .pressed {
-  /* transform: scale(1.1); */
-  /* transition: transform 0.05s ease; */
   box-shadow: 0 0 20px 10px rgba(0, 255, 0, 1);
   animation: pulseGlow 0.5s infinite;
 }
