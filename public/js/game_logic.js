@@ -29,9 +29,9 @@ document.addEventListener("DOMContentLoaded", function () {
   if (okButton) {
     okButton.addEventListener("click", function () {
       document.getElementById("instructions-modal").style.display = "none";
-      console.log("User's instructions modal has been closed");
+      // console.log("User's instructions modal has been closed");
       instructionsAudio.pause();
-      console.log("Audio has been paused");
+      // console.log("Audio has been paused");
     });
   }
 });
@@ -46,16 +46,16 @@ function nextSequence() {
   level++;
 
   $("#level-title").text("Level " + level);
-  console.log("Level title has been changed to: Level " + level);
+  // console.log("Level title has been changed to: Level " + level);
 
   var randomNumber = Math.floor(Math.random() * 4);
-  console.log("Random number: " + randomNumber);
+  // console.log("Random number: " + randomNumber);
 
   var randomChosenColor = buttonColors[randomNumber];
-  console.log("Random color: " + randomChosenColor);
+  // console.log("Random color: " + randomChosenColor);
 
   gamePattern.push(randomChosenColor);
-  console.log("Game pattern: " + gamePattern);
+  // console.log("Game pattern: " + gamePattern);
 
 
   setTimeout(function () {
@@ -102,14 +102,33 @@ function hideForm() {
 
 // #######################################
 
+// async function getUserName() {
+//   return new Promise((resolve) => {
+//     document.getElementsByClassName("form_button")[0].addEventListener('click', function (event) {
+//       event.preventDefault(); // Prevent the default form submission
+//       resolve();
+//     });
+//   });
+// }
+
+
 async function getUserName() {
   return new Promise((resolve) => {
     document.getElementsByClassName("form_button")[0].addEventListener('click', function (event) {
-      event.preventDefault(); // Prevent the default form submission
+      const input = document.getElementById("name-input");
+
+      if (input.value.trim() === "") {
+        alert("No can do, please enter your name before submitting.");
+        return;
+      }
+
+      event.preventDefault();
       resolve();
     });
   });
 }
+
+
 
 async function playSuccessSounds() {
   // Functions that plays the success sounds
@@ -160,10 +179,10 @@ async function ifBetterScore() {
 function checkAnswer(currentLevel) {
 
   if (gamePattern[currentLevel] === userClickedPattern[currentLevel]) {
-    console.log(gamePattern[currentLevel] + " color is equal to " + userClickedPattern[currentLevel] + " color");
+    // console.log(gamePattern[currentLevel] + " color is equal to " + userClickedPattern[currentLevel] + " color");
 
     if (userClickedPattern.length === gamePattern.length) {
-      console.log(userClickedPattern.length + " length is equal to " + gamePattern.length + " length");
+      // console.log(userClickedPattern.length + " length is equal to " + gamePattern.length + " length");
 
       nextSequence();
     }
@@ -189,13 +208,13 @@ function checkAnswer(currentLevel) {
 function activateRocketAndStartGame() {
   $("#activate-button").click(function () {
     $("#rocket img").css("animation", "moveOut 2s ease-in-out forwards");
-    console.log("Launching rocket");
+    // console.log("Launching rocket");
 
     $("#rocket img").one("animationend", function () {
       $("#rocket").hide();
-      console.log("Rocket has been hided");
+      // console.log("Rocket has been hided");
       $("#activate-button").hide();
-      console.log("Rocket launcher has been hided");
+      // console.log("Rocket launcher has been hided");
 
       // Start the game if it hasn't already started
       if (!started && formSubmitted) {
@@ -251,7 +270,7 @@ function return_rocket() {
 function playSound(name) {
   var audio = new Audio("/sounds/" + name + ".mp3");
   audio.play();
-  console.log("Sound of " + name + " has been played");
+  // console.log("Sound of " + name + " has been played");
 }
 
 function animatePress(currentColor) {
@@ -268,10 +287,10 @@ function animatePress(currentColor) {
 // #####################################################
 
 hideForm();
-console.log("Winner form has been hidden");
+// console.log("Winner form has been hidden");
 
 retrieve();
-console.log("Retrived table's data from DB");
+// console.log("Retrived table's data from DB");
 
 $(document).ready(function () {
 
@@ -285,13 +304,13 @@ $(document).ready(function () {
   });
 
   activateRocketAndStartGame();
-  console.log("Rocket's launching animation is ready to be activated");
+  // console.log("Rocket's launching animation is ready to be activated");
 
   // Playin' effects and check answer
   $(".btn").click(function () {
     if (formSubmitted && started) {
       var userChosenColor = $(this).attr("id");
-      console.log("User chose color: " + userChosenColor);
+      // console.log("User chose color: " + userChosenColor);
       userClickedPattern.push(userChosenColor);
 
       playSound(userChosenColor);
