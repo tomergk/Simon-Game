@@ -38,7 +38,7 @@
       <div class="shape shape-3"></div>
       <div class="shape shape-4"></div>
       <div class="shape shape-5"></div>
-    </div>    
+    </div>
 
     <!-- Instructions Modal -->
     <div id="instructions-modal">
@@ -47,43 +47,49 @@
         <p>
           <b>Welcome to Simon+ game!</b><br>
           Your goal is to follow the sequence and press the right colors. <br>
-          Keep in mind that each level you will be exposed to another color. <br>
-          When you're ready, click <span style="color: #8E44AD; font-weight: bold;">OK</span> to begin.
+          Keep in mind that each level you will be exposed to another color.
+          <br>
+          When you're ready, click <span
+            style="color: #8E44AD; font-weight: bold;">OK</span> to begin.
         </p>
         <button id="read-instructions">
-          <img src="images/audio-icon.png" alt="">
-          <audio id="instructions" src="sounds/instructions.mp3" preload="auto"></audio>
+          <img src="images/audio-icon.png" alt>
+          <audio id="instructions" src="sounds/instructions.mp3"
+            preload="auto"></audio>
         </button>
 
-        
         <button id="instructions-ok">OK</button>
       </div>
     </div>
 
     <div>
-        <h1 id="level-title">To start the game, launch the</h1>
+      <h1 id="level-title">To start the game, launch the</h1>
     </div>
 
-    <button id="activate-button"><img src="images/button.png" alt="button-to-active"></button>
-    <audio id="hover-sound" src="sounds/rocket/hover-button.mp3" preload="auto"></audio>
-    <audio id="press-button" src="sounds/rocket/press-button.mp3" preload="auto"></audio>
+    <button id="activate-button"><img src="images/button.png"
+        alt="button-to-active"></button>
+    <audio id="hover-sound" src="sounds/rocket/hover-button.mp3"
+      preload="auto"></audio>
+    <audio id="press-button" src="sounds/rocket/press-button.mp3"
+      preload="auto"></audio>
     <audio id="exit" src="sounds/rocket/exit.mp3" preload="auto"></audio>
     <audio id="boom" src="sounds/rocket/boom.mp3" preload="auto"></audio>
 
     <div class="color_board">
 
       <div class="row">
-        <div type="button" id="yellow" class="btn yellow"></div>
-        <div type="button" id="red" class="btn red"></div>
+        <div type="button" id="yellow" class="btn"></div>
+        <div type="button" id="red" class="btn"></div>
       </div>
 
       <div class="row">
-        <div type="button" id="green" class="btn green"></div>
-        <div type="button" id="blue" class="btn blue"></div>
+        <div type="button" id="green" class="btn"></div>
+        <div type="button" id="blue" class="btn"></div>
       </div>
     </div>
 
-    <button id="rocket"><img src="images/start_icon_3.png" alt="start-image"></button>
+    <button id="rocket"><img src="images/start_icon_3.png"
+        alt="start-image"></button>
 
     <div class="scores_board">
 
@@ -115,10 +121,12 @@
 
     <div id="popup-form">
       <form id="userName_form">
-        <label 
-          class="form_header1" 
-          for>Hey! please enter your name so we place you as one of the tree musketeers.</label>
-        <input placeholder="full name" type="text" value="" id="name-input" required>
+        <label
+          class="form_header1"
+          for>"Please enter your name to be listed among the top three high scorers."
+        </label>
+        <input placeholder="full name" type="text" value id="name-input"
+          required>
         <button class="form_button" type="button">Send</button>
         <img src='/images/1.png' alt="king-image" class="king_pic">
       </form>
@@ -127,15 +135,13 @@
     <footer class="footer">
       <small>All rights reserved &copy; TOM3R</small>
     </footer>
-      
 
-      <script>document.addEventListener("DOMContentLoaded", function() {
+    <script>document.addEventListener("DOMContentLoaded", function() {
         const instructionsAudio = document.getElementById("instructions");
         instructionsAudio.play().catch(error => {
           console.error("Autoplay prevented:", error);
         });
       });</script>
-
 
   </body>
 </html>

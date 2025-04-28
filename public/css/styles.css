@@ -234,27 +234,27 @@ html, body {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
 }
 
-.yellow {
+#yellow {
   background-color: #FFCE3C;
 }
 
-.red {
+#red {
   background-color: #E94E77;
 }
 
-.green {
+#green {
   background-color: #44B275;
 }
 
-.blue {
+#blue {
   background-color: #4A90E2;
 }
 
 .pressed {
-  background-color: #111;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-  transform: scale(1.2);
-  color: #fff;
+  /* transform: scale(1.1); */
+  /* transition: transform 0.05s ease; */
+  box-shadow: 0 0 20px 10px rgba(0, 255, 0, 1);
+  animation: pulseGlow 0.5s infinite;
 }
 
 .scores_board{

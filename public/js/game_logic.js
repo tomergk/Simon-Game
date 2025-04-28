@@ -1,4 +1,4 @@
-const buttonColors = ["red", "blue", "yellow", "green"]; 
+const buttonColors = ["red", "blue", "yellow", "green"];
 let gamePattern = []; // Array that saves colors that picked randomly, in the right order.
 let userClickedPattern = []; // Array that saves the colors that the user picked.
 let level = 0; // The game starts at level 1 but for easy logic it starts at 0.
@@ -14,106 +14,62 @@ const exit = document.getElementById('exit');
 const boom = document.getElementById('boom');
 
 // ############################
-// User Instructions: for User's understanding & Audio to work 
-document.addEventListener("DOMContentLoaded", function() {
+// User Instructions form
+document.addEventListener("DOMContentLoaded", function () {
   const okButton = document.getElementById("instructions-ok");
   const instructionsAudio = document.getElementById("instructions");
   // Read aloud option
-  document.getElementById("read-instructions").addEventListener("click", function() {
+  document.getElementById("read-instructions").addEventListener("click", function () {
     instructionsAudio.currentTime = 0;
     instructionsAudio.play();
   });
 
   if (okButton) {
-    okButton.addEventListener("click", function() {
+    okButton.addEventListener("click", function () {
       document.getElementById("instructions-modal").style.display = "none";
+      console.log("User's instructions modal has been closed");
       instructionsAudio.pause();
+      console.log("Audio has been paused");
     });
   }
 });
 
-
 // ############################ 
 
-
-// ============= Retrieving data from DB & display it on user's screen's table =============
-function retrieve() {
-  fetch("/api/place/1")
-    .then((response) => response.json())
-    .then((data) => {
-      // Updating HTML using retrieved data
-      document.getElementById("place1").innerHTML = data.place;
-      document.getElementById("name1").innerHTML = data.name;
-      document.getElementById("score1").innerHTML = data.score;
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
-
-  fetch("/api/place/2")
-    .then((response) => response.json())
-    .then((data) => {
-      // Updating HTML using the retrieved data
-      document.getElementById("place2").innerHTML = data.place;
-      document.getElementById("name2").innerHTML = data.name;
-      document.getElementById("score2").innerHTML = data.score;
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
-
-  fetch("/api/place/3")
-    .then((response) => response.json())
-    .then((data) => {
-      // Updating HTML using the retrieved data
-      document.getElementById("place3").innerHTML = data.place;
-      document.getElementById("name3").innerHTML = data.name;
-      document.getElementById("score3").innerHTML = data.score;
-      lowestScoreOnTable = data.score;
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
-}
-
-function playSound(name) {
-  var audio = new Audio("/sounds/" + name + ".mp3");
-  audio.play();
-}
-
-function animatePress(currentColor) {
-  $("#" + currentColor).addClass("pressed");
-  setTimeout(function () {
-    $("#" + currentColor).removeClass("pressed");
-  }, 150);
-}
-
-// Picks next color + change title text level
+// Promote game's level
+// Generating next color 
 function nextSequence() {
+
   userClickedPattern = []; // new every time  
   level++;
+
   $("#level-title").text("Level " + level);
+  console.log("Level title has been changed to: Level " + level);
+
   var randomNumber = Math.floor(Math.random() * 4);
+  console.log("Random number: " + randomNumber);
+
   var randomChosenColor = buttonColors[randomNumber];
+  console.log("Random color: " + randomChosenColor);
+
   gamePattern.push(randomChosenColor);
-  $("#" + randomChosenColor).css("background-color", "black"); // blackaning
-  setTimeout(function() {
-    $("#" + randomChosenColor).css("background-color", ""); // Reset to original
-    }, 200);
-    playSound(randomChosenColor);
+  console.log("Game pattern: " + gamePattern);
+
+  animatePress(randomChosenColor);
+  playSound(randomChosenColor);
 }
 
 function prepareTostartOver() {
   level = 0;
   gamePattern = [];
   started = false;
-  
+
   // Reset the rocket's image: remove any animation and set it back to the initial transform.
   $("#rocket img").css({
     "animation": "none",
     "transform": "scale(0) rotate(0deg)"
   });
-  
+
   // Call the reset function to handle showing the rocket and activating the button with the pop effect.
   resetRocketAndActivateButton();
 }
@@ -195,17 +151,19 @@ async function ifBetterScore() {
 };
 
 function checkAnswer(currentLevel) {
+
   if (gamePattern[currentLevel] === userClickedPattern[currentLevel]) {
+    console.log(gamePattern[currentLevel] + " color is equal to " + userClickedPattern[currentLevel] + " color");
+
     if (userClickedPattern.length === gamePattern.length) {
-      setTimeout(function () {
-        nextSequence();
-      }, 1000);
+      console.log(userClickedPattern.length + " length is equal to " + gamePattern.length + " length");
+
+      nextSequence();
     }
   }
   else {
-    // checking if current score > third place on table's scores
-    if (level - 1 > lowestScoreOnTable) {
-    ifBetterScore(); // User failed => checking if score is better than any table's scores
+    if (level - 1 > lowestScoreOnTable) { // checking if current score (level) > third place on table
+      ifBetterScore(); // User failed => checking if score is better than any table's scores
     }
     else {
       playSound("wrong");
@@ -214,7 +172,6 @@ function checkAnswer(currentLevel) {
       setTimeout(function () {
         $("#level-title").text("To start the game, launch the");
       }, 2000);
-
       prepareTostartOver();
     }
   }
@@ -224,20 +181,17 @@ function checkAnswer(currentLevel) {
 
 function activateRocketAndStartGame() {
   $("#activate-button").click(function () {
-    console.log("active button is ready to be clicked");
-    // Start the rocket's animation on its image
     $("#rocket img").css("animation", "moveOut 2s ease-in-out forwards");
-    console.log("rockets animation activated");
-    // When the animation ends, hide the rocket and the activate button
+    console.log("Launching rocket");
+
     $("#rocket img").one("animationend", function () {
       $("#rocket").hide();
-      console.log("hide the rocket");
+      console.log("Rocket has been hided");
       $("#activate-button").hide();
-      console.log("hide active button rocket");
+      console.log("Rocket launcher has been hided");
 
       // Start the game if it hasn't already started
       if (!started && formSubmitted) {
-        console.log("if didnt start the game then change next level title and choose next sequence and change started var to true");
         $("#level-title").text("Level " + level);
         nextSequence();
         started = true;
@@ -261,14 +215,14 @@ activateButton.addEventListener('mouseleave', () => {
 activateButton.addEventListener('click', () => {
   pressButton.currentTime = 0;
   pressButton.play();
+  const timeout = setTimeout(() => {
+    exit.currentTime = 0;
+    exit.play();
+  }, 300);
   setTimeout(() => {
-  exit.currentTime = 0;
-  exit.play();
-}, 300); 
-setTimeout(() => {
-  boom.currentTime = 0;
-  boom.play();
-}, 2000); 
+    boom.currentTime = 0;
+    boom.play();
+  }, 2000);
 });
 
 function resetRocketAndActivateButton() {
@@ -287,30 +241,50 @@ function return_rocket() {
   $("#rocket").css("animation", "moveBack 3s forwards");
 }
 
-// ========== WORK STARTS HERE ==========
+function playSound(name) {
+  var audio = new Audio("/sounds/" + name + ".mp3");
+  audio.play();
+  console.log("Sound of " + name + " has been played");
+}
+
+function animatePress(currentColor) {
+  $("#" + currentColor).addClass("pressed");
+  setTimeout(function () {
+    $("#" + currentColor).removeClass("pressed");
+  }, 350);
+}
+
+// #####################################################
+// ################  WORK STARTS HERE  #################
+// #####################################################
+
 hideForm();
-console.log("hiding form");
+console.log("Winner form has been hidden");
+
 retrieve();
-console.log("retriving data from db");
+console.log("Retrived table's data from DB");
+
 $(document).ready(function () {
+
+  // Preparing next title and next color to be change when user will launch the rocket
   $("#rocket").click(function () {
     if (!started && formSubmitted) {
       $("#level-title").text("Level " + level);
       nextSequence();
       started = true;
-      console.log("rocket is ready to be clicked and if not started, then putting title level & choosing next sequence & start=true");
     }
   });
 
   activateRocketAndStartGame();
-  console.log("activating rocket");
+  console.log("Rocket's launching animation is ready to be activated");
 
-  // Activate effects when the user click on a color
+  // Playin' effects and check answer
   $(".btn").click(function () {
-    if (formSubmitted) {
+    if (formSubmitted && started) {
       var userChosenColor = $(this).attr("id");
-      console.log("userChosenColor:" + userChosenColor);
+      console.log("User chose color: " + userChosenColor);
       userClickedPattern.push(userChosenColor);
+
       playSound(userChosenColor);
       animatePress(userChosenColor);
       checkAnswer(userClickedPattern.length - 1);
@@ -318,3 +292,50 @@ $(document).ready(function () {
   });
 
 });
+
+
+
+
+// ##################################################################################################
+// ################  Retrieving data from DB & display it on user's screen's table  #################
+// ##################################################################################################
+
+function retrieve() {
+  fetch("/api/place/1")
+    .then((response) => response.json())
+    .then((data) => {
+      // Updating HTML using retrieved data
+      document.getElementById("place1").innerHTML = data.place;
+      document.getElementById("name1").innerHTML = data.name;
+      document.getElementById("score1").innerHTML = data.score;
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+
+  fetch("/api/place/2")
+    .then((response) => response.json())
+    .then((data) => {
+      // Updating HTML using the retrieved data
+      document.getElementById("place2").innerHTML = data.place;
+      document.getElementById("name2").innerHTML = data.name;
+      document.getElementById("score2").innerHTML = data.score;
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+
+  fetch("/api/place/3")
+    .then((response) => response.json())
+    .then((data) => {
+      // Updating HTML using the retrieved data
+      document.getElementById("place3").innerHTML = data.place;
+      document.getElementById("name3").innerHTML = data.name;
+      document.getElementById("score3").innerHTML = data.score;
+      lowestScoreOnTable = data.score;
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
+
